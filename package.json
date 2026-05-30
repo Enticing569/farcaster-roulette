@@ -1,0 +1,8 @@
+{
+  "dependencies": {
+    "frog": "latest",
+    "hono": "latest",
+    "viem": "latest",
+    "react": "latest"
+  }
+}
