@@ -4,9 +4,11 @@
   "type": "module",
   "dependencies": {
     "frog": "latest",
-    "hono": "latest"
+    "hono": "latest",
+    "viem": "latest"
   },
   "devDependencies": {
-    "typescript": "latest"
+    "typescript": "latest",
+    "@types/node": "latest"
   }
 }
