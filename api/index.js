@@ -1,9 +1,10 @@
 import { Frog } from 'frog'
-import { handle } from 'frog/vercel'
+import { handle } from 'frog/next' // Используем универсальный адаптер для Vercel/Next
 
 export const app = new Frog({
   basePath: '/api',
   title: 'Sepolia Roulette',
+  hub: { apiUrl: "https://hubs.airstack.xyz", apiKey: "YOUR_AIRSTACK_API_KEY" } // Можно оставить пустым для тестов
 })
 
 const CONTRACT_ADDRESS = '0xC7084fAC1EDFc9337e84A62285097D4586421c48'
@@ -12,7 +13,7 @@ const CONTRACT_ADDRESS = '0xC7084fAC1EDFc9337e84A62285097D4586421c48'
 app.frame('/', (c) => {
   return c.res({
     action: '/result',
-    image: '/image-main', // Используем эндпоинт для генерации картинки вместо JSX
+    image: '/image-main',
     intents: [
       {
         type: 'transaction',
@@ -23,7 +24,7 @@ app.frame('/', (c) => {
   })
 })
 
-// Хэндлер для генерации первой картинки
+// Генерация первой картинки
 app.image('/image-main', (c) => {
   return c.res({
     html: `
@@ -35,11 +36,11 @@ app.image('/image-main', (c) => {
   })
 })
 
-// Настройка блокчейн-транзакции
+// Настройка транзакции
 app.transaction('/spin', (c) => {
   return c.contract({
     abi: [{ inputs: [], name: "spin", outputs: [], stateMutability: "nonpayable", type: "function" }],
-    chainId: 'eip155:11155111', // Sepolia Testnet
+    chainId: 'eip155:11155111', 
     functionName: 'spin',
     to: CONTRACT_ADDRESS,
   })
@@ -58,7 +59,7 @@ app.frame('/result', (c) => {
   })
 })
 
-// Хэндлер для генерации картинки результата
+// Картинка результата
 app.image('/image-result', (c) => {
   return c.res({
     html: `
@@ -69,5 +70,6 @@ app.image('/image-result', (c) => {
   })
 })
 
+// Экспортируем для Vercel
 export const GET = handle(app)
 export const POST = handle(app)
