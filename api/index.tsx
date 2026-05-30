@@ -1,5 +1,5 @@
 /** @jsxImportSource frog/jsx */
-import { Frog } from 'frog'
+import { Button, Frog } from 'frog'
 import { handle } from 'frog/next'
 
 export const app = new Frog({
@@ -14,17 +14,23 @@ app.frame('/', (c) => {
   return c.res({
     action: '/result',
     image: (
-      <div style={{ color: 'white', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', backgroundColor: '#1e1b4b', width: '100%', height: '100%', fontFamily: 'sans-serif' }}>
+      <div style={{ 
+        color: 'white', 
+        display: 'flex', 
+        flexDirection: 'column', 
+        alignItems: 'center', 
+        justifyContent: 'center', 
+        backgroundColor: '#1e1b4b', 
+        width: '100%', 
+        height: '100%', 
+        fontFamily: 'sans-serif' 
+      }}>
         <h1 style={{ fontSize: '60px', marginBottom: '10px' }}>🎰 Sepolia Roulette 🎰</h1>
         <p style={{ fontSize: '30px', color: '#a5b4fc' }}>Выиграй 0.00001 ETH</p>
       </div>
     ),
     intents: [
-      {
-        type: 'transaction',
-        target: '/spin',
-        label: 'Крутить рулетку! 🚀'
-      }
+      <Button.Transaction target="/spin">Крутить рулетку! 🚀</Button.Transaction>
     ],
   })
 })
@@ -32,8 +38,14 @@ app.frame('/', (c) => {
 // Настройка транзакции
 app.transaction('/spin', (c) => {
   return c.contract({
-    abi: [{ inputs: [], name: "spin", outputs: [], stateMutability: "nonpayable", type: "function" }],
-    chainId: 'eip155:11155111', 
+    abi: [{ 
+      inputs: [], 
+      name: "spin", 
+      outputs: [], 
+      stateMutability: "nonpayable", 
+      type: "function" 
+    }],
+    chainId: 'eip155:11155111', // Sepolia
     functionName: 'spin',
     to: CONTRACT_ADDRESS,
   })
@@ -43,14 +55,24 @@ app.transaction('/spin', (c) => {
 app.frame('/result', (c) => {
   return c.res({
     image: (
-      <div style={{ color: 'white', display: 'flex', alignItems: 'center', justifyContent: 'center', backgroundColor: '#1e1b4b', width: '100%', height: '100%', fontFamily: 'sans-serif' }}>
+      <div style={{ 
+        color: 'white', 
+        display: 'flex', 
+        alignItems: 'center', 
+        justifyContent: 'center', 
+        backgroundColor: '#1e1b4b', 
+        width: '100%', 
+        height: '100%', 
+        fontFamily: 'sans-serif' 
+      }}>
         <h1 style={{ fontSize: '40px', color: '#4ade80' }}>Транзакция отправлена! 🎉</h1>
       </div>
     ),
-    intents: [{ type: 'reset', label: 'Назад' }]
+    intents: [
+      <Button.Reset>Назад</Button.Reset>
+    ]
   })
 })
 
-// Экспортируем хендлеры, которые Vercel поймет без ошибок
 export const GET = handle(app)
 export const POST = handle(app)
