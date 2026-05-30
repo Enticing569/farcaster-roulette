@@ -1,10 +1,12 @@
 import { Button, Frog } from 'frog'
+// ДОБАВЛЯЕМ АДАПТЕР ДЛЯ VERCEL Node.js
+import { handle } from 'frog/vercel'
 
 export const app = new Frog({
+  basePath: '/api', // Важно указать путь, так как файлы лежат в папке api
   title: 'Sepolia Roulette',
 })
 
-// Твой адрес контракта в сети Sepolia
 const CONTRACT_ADDRESS = '0xC7084fAC1EDFc9337e84A62285097D4586421c48'
 
 app.frame('/', (c) => {
@@ -34,7 +36,7 @@ app.transaction('/spin', (c) => {
         type: "function"
       }
     ],
-    chainId: 'eip155:11155111', // ID сети Sepolia
+    chainId: 'eip155:11155111', 
     functionName: 'spin',
     to: CONTRACT_ADDRESS,
   })
@@ -49,9 +51,6 @@ app.frame('/result', (c) => {
         <p style={{ fontSize: 24, textAlign: 'center', color: '#a5b4fc', marginTop: 20 }}>
           Транзакция отправлена в сеть Sepolia.
         </p>
-        <p style={{ fontSize: 18, textAlign: 'center', color: '#94a3b8', marginTop: 10 }}>
-          Результат появится в кошельке после подтверждения.
-        </p>
         {transactionId && (
           <p style={{ fontSize: 16, color: '#818cf8', marginTop: 20, wordBreak: 'break-all' }}>
             TX: {transactionId.slice(0, 30)}...
@@ -62,3 +61,7 @@ app.frame('/result', (c) => {
     intents: [<Button.Reset>Попробовать завтра</Button.Reset>]
   })
 })
+
+// ОБЯЗАТЕЛЬНО ДЛЯ ВЕРСЕЛ: Экспортируем обработчики запросов
+export const GET = handle(app)
+export const POST = handle(app)
