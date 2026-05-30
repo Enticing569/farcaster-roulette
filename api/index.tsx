@@ -1,14 +1,12 @@
 import { Button, Frog } from 'frog'
 import { handle } from 'frog/vercel'
 
-// Принудительно указываем Vercel использовать Node.js, а не Edge
 export const config = {
   runtime: 'nodejs'
 }
 
 export const app = new Frog({
-  basePath: '/api',
-  title: 'Sepolia Roulette',
+  basePath: '/api'
 })
 
 const CONTRACT_ADDRESS = '0xC7084fAC1EDFc9337e84A62285097D4586421c48'
@@ -31,7 +29,7 @@ app.frame('/', (c) => {
 app.transaction('/spin', (c) => {
   return c.contract({
     abi: [{ inputs: [], name: "spin", outputs: [], stateMutability: "nonpayable", type: "function" }],
-    chainId: 'eip155:11155111', 
+    chainId: 'eip155:11155111' as any,
     functionName: 'spin',
     to: CONTRACT_ADDRESS,
   })
