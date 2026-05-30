@@ -1,6 +1,6 @@
 /** @jsxImportSource frog/jsx */
 import { Button, Frog } from 'frog'
-import { handle } from 'frog/next'
+import { handle } from 'frog/vercel'
 
 export const app = new Frog({
   basePath: '/api',
