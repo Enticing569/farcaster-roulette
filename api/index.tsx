@@ -1,9 +1,9 @@
 import { Button, Frog } from 'frog'
 import { handle } from 'frog/vercel'
 
-// Принудительно включаем Edge Runtime
+// Принудительно указываем Vercel использовать Node.js, а не Edge
 export const config = {
-  runtime: 'edge',
+  runtime: 'nodejs'
 }
 
 export const app = new Frog({
