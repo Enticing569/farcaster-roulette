@@ -6,8 +6,8 @@
     "strict": true,
     "esModuleInterop": true,
     "skipLibCheck": true,
-    "jsx": "react-jsx",
-    "jsxImportSource": "frog/jsx"
-  },
-  "include": ["api/**/*"]
+    "jsx": "react",
+    "jsxFactory": "h",
+    "jsxFragmentFactory": "Fragment"
+  }
 }
