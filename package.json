@@ -2,11 +2,21 @@
   "name": "sepolia-roulette",
   "version": "1.0.0",
   "type": "module",
+  "scripts": {
+    "build": "tsc",
+    "start": "frog dev"
+  },
   "dependencies": {
     "frog": "latest",
     "hono": "latest",
     "viem": "latest",
     "react": "latest",
     "react-dom": "latest"
+  },
+  "devDependencies": {
+    "typescript": "latest",
+    "@types/react": "latest",
+    "@types/react-dom": "latest",
+    "@types/node": "latest"
   }
 }
