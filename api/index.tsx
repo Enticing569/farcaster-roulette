@@ -1,6 +1,11 @@
 import { Button, Frog } from 'frog'
 import { handle } from 'frog/vercel'
 
+// Принудительно включаем Edge Runtime
+export const config = {
+  runtime: 'edge',
+}
+
 export const app = new Frog({
   basePath: '/api',
   title: 'Sepolia Roulette',
