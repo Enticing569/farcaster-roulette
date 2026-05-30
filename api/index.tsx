@@ -1,4 +1,4 @@
-/** @jsxImportSource react */
+/** @jsxImportSource frog/jsx */
 import { Button, Frog } from 'frog'
 import { handle } from 'frog/vercel'
 
@@ -55,7 +55,7 @@ app.frame('/result', (c) => {
         )}
       </div>
     ),
-    intents: [<Button.Reset>Попробовать завтра</Button.Reset>]
+    intents: [<Button.Reset>Назад</Button.Reset>]
   })
 })
 
