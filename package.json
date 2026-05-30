@@ -4,7 +4,6 @@
   "type": "module",
   "dependencies": {
     "frog": "latest",
-    "@frog/vercel": "latest",
     "hono": "latest",
     "viem": "latest"
   }
