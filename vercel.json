@@ -1,11 +1,3 @@
 {
-  "version": 2,
-  "functions": {
-    "api/index.tsx": {
-      "runtime": "nodejs20.x"
-    }
-  },
-  "rewrites": [
-    { "source": "/api/(.*)", "destination": "/api/index.tsx" }
-  ]
+  "version": 2
 }
