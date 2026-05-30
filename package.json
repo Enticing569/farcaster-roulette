@@ -1,17 +1,13 @@
 {
   "name": "sepolia-roulette",
   "version": "1.0.0",
-  "main": "api/index.tsx",
+  "type": "module", 
+  "main": "api/index.js",
   "dependencies": {
     "frog": "latest",
     "hono": "latest",
     "viem": "latest",
     "react": "latest",
     "react-dom": "latest"
-  },
-  "devDependencies": {
-    "@types/react": "latest",
-    "@types/react-dom": "latest",
-    "typescript": "latest"
   }
 }
