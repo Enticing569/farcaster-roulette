@@ -1,4 +1,7 @@
 {
+  "name": "sepolia-roulette",
+  "version": "1.0.0",
+  "main": "api/index.tsx",
   "dependencies": {
     "frog": "latest",
     "hono": "latest",
