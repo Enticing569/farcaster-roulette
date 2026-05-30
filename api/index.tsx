@@ -1,5 +1,4 @@
-/** @jsxImportSource frog/jsx */
-import { Button, Frog } from 'frog'
+import { Button, Frog, h } from 'frog'
 import { handle } from 'frog/vercel'
 
 export const config = {
