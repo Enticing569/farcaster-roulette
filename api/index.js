@@ -1,11 +1,9 @@
-/** @jsxImportSource frog/jsx */
 import { Button, Frog } from 'frog'
 import { handle } from 'frog/vercel'
 
 export const app = new Frog({
   basePath: '/api',
   title: 'Sepolia Roulette',
-  imageAspectRatio: '1.91:1',
 })
 
 const CONTRACT_ADDRESS = '0xC7084fAC1EDFc9337e84A62285097D4586421c48'
@@ -14,10 +12,9 @@ app.frame('/', (c) => {
   return c.res({
     action: '/result',
     image: (
-      <div style={{ color: 'white', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', backgroundColor: '#1e1b4b', width: '100%', height: '100%', fontFamily: 'sans-serif' }}>
-        <h1 style={{ fontSize: 60, marginBottom: 10 }}>🎰 Sepolia Roulette 🎰</h1>
-        <p style={{ fontSize: 32, color: '#a5b4fc' }}>Выиграй 0.00001 ETH</p>
-        <p style={{ fontSize: 20, color: '#818cf8', marginTop: 15 }}>Раз в 24 часа • Сеть Sepolia</p>
+      <div style={{ color: 'white', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', backgroundColor: '#1e1b4b', width: '100%', height: '100%' }}>
+        <h1 style={{ fontSize: 60 }}>🎰 Sepolia Roulette 🎰</h1>
+        <p style={{ fontSize: 30 }}>Выиграй 0.00001 ETH</p>
       </div>
     ),
     intents: [
@@ -28,31 +25,18 @@ app.frame('/', (c) => {
 
 app.transaction('/spin', (c) => {
   return c.contract({
-    abi: [
-      {
-        inputs: [],
-        name: "spin",
-        outputs: [],
-        stateMutability: "nonpayable",
-        type: "function"
-      }
-    ],
-    chainId: 'eip155:11155111', 
+    abi: [{ inputs: [], name: "spin", outputs: [], stateMutability: "nonpayable", type: "function" }],
+    chainId: 'eip155:11155111',
     functionName: 'spin',
     to: CONTRACT_ADDRESS,
   })
 })
 
 app.frame('/result', (c) => {
-  const { transactionId } = c
   return c.res({
     image: (
-      <div style={{ color: 'white', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', backgroundColor: '#1e1b4b', width: '100%', height: '100%', fontFamily: 'sans-serif', padding: 40 }}>
-        <h1 style={{ fontSize: 50, color: '#4ade80' }}>Готово! 🎉</h1>
-        <p style={{ fontSize: 24, textAlign: 'center', color: '#a5b4fc', marginTop: 20 }}>Транзакция отправлена в сеть Sepolia.</p>
-        {transactionId && (
-          <p style={{ fontSize: 16, color: '#818cf8', marginTop: 20, wordBreak: 'break-all' }}>TX: {transactionId.slice(0, 30)}...</p>
-        )}
+      <div style={{ color: 'white', display: 'flex', alignItems: 'center', justifyContent: 'center', backgroundColor: '#1e1b4b', width: '100%', height: '100%' }}>
+        <h1 style={{ fontSize: 40 }}>Транзакция отправлена! 🎉</h1>
       </div>
     ),
     intents: [<Button.Reset>Назад</Button.Reset>]
