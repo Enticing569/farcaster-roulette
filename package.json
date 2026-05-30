@@ -1,14 +1,3 @@
 {
-  "name": "farcaster-roulette",
-  "version": "1.0.0",
-  "type": "module",
-  "dependencies": {
-    "frog": "latest",
-    "hono": "latest",
-    "viem": "latest"
-  },
-  "devDependencies": {
-    "typescript": "latest",
-    "@types/node": "latest"
-  }
+  "type": "module"
 }
