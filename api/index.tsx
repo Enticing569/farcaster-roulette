@@ -1,10 +1,11 @@
 import { Button, Frog } from 'frog'
-// ДОБАВЛЯЕМ АДАПТЕР ДЛЯ VERCEL Node.js
 import { handle } from 'frog/vercel'
 
 export const app = new Frog({
-  basePath: '/api', // Важно указать путь, так как файлы лежат в папке api
+  basePath: '/api',
   title: 'Sepolia Roulette',
+  // Это поможет избежать ошибок с путями изображений
+  imageAspectRatio: '1.91:1', 
 })
 
 const CONTRACT_ADDRESS = '0xC7084fAC1EDFc9337e84A62285097D4586421c48'
@@ -49,19 +50,19 @@ app.frame('/result', (c) => {
       <div style={{ color: 'white', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', backgroundColor: '#1e1b4b', width: '100%', height: '100%', fontFamily: 'sans-serif', padding: 40 }}>
         <h1 style={{ fontSize: 50, color: '#4ade80' }}>Готово! 🎉</h1>
         <p style={{ fontSize: 24, textAlign: 'center', color: '#a5b4fc', marginTop: 20 }}>
-          Транзакция отправлена в сеть Sepolia.
+          Транзакция отправлена!
         </p>
         {transactionId && (
-          <p style={{ fontSize: 16, color: '#818cf8', marginTop: 20, wordBreak: 'break-all' }}>
-            TX: {transactionId.slice(0, 30)}...
+          <p style={{ fontSize: 16, color: '#818cf8', marginTop: 20 }}>
+            ID: {transactionId.slice(0, 20)}...
           </p>
         )}
       </div>
     ),
-    intents: [<Button.Reset>Попробовать завтра</Button.Reset>]
+    intents: [<Button.Reset>Назад</Button.Reset>]
   })
 })
 
-// ОБЯЗАТЕЛЬНО ДЛЯ ВЕРСЕЛ: Экспортируем обработчики запросов
+// Экспортируем для Vercel
 export const GET = handle(app)
 export const POST = handle(app)
