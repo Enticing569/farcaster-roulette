@@ -1,6 +1,5 @@
 import { Button, Frog } from 'frog'
-import { handle } from 'frog/vercel'
-
+import { handle } from 'frog/next'
 export const app = new Frog({
   basePath: '/api',
   title: 'Sepolia Roulette',
