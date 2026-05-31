@@ -2,6 +2,9 @@
   "name": "farcaster-roulette",
   "version": "1.0.0",
   "type": "module",
+  "scripts": {
+    "build": "echo 'Build skipped'"
+  },
   "dependencies": {
     "frog": "latest"
   }
