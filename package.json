@@ -1,15 +1,6 @@
 {
-  "name": "farcaster-roulette",
-  "version": "1.0.0",
   "type": "module",
-  "engines": {
-    "node": "20.x"
-  },
   "dependencies": {
-    "frog": "^0.8.0"
-  },
-  "devDependencies": {
-    "typescript": "^5.4.5",
-    "@types/node": "^20.0.0"
+    "frog": "^0.14.0"
   }
 }
