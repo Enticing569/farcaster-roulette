@@ -1,13 +1,13 @@
 {
   "name": "farcaster-roulette",
-  "version": "0.1.0",
+  "version": "1.0.0",
+  "type": "module",
+  "main": "server.js",
   "scripts": {
-    "build": "next build"
+    "start": "node server.js"
   },
   "dependencies": {
     "frog": "latest",
-    "next": "latest",
-    "react": "latest",
-    "react-dom": "latest"
+    "express": "latest"
   }
 }
