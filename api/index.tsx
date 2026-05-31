@@ -1,3 +1,4 @@
+/** @jsxImportSource frog */
 import { Button, Frog } from 'frog'
 import { handle } from 'frog/vercel'
 
