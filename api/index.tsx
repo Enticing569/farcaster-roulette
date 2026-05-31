@@ -1,5 +1,7 @@
 import { Button, Frog } from 'frog'
-import { handle } from 'frog/vercel'
+export const app = new Frog({
+  title: 'Farcaster Roulette'
+})
 
 export const config = {
   runtime: 'nodejs'
