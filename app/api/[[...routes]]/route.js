@@ -1,17 +1,12 @@
-import { handle } from 'frog/next';
 import { Frog, Button } from 'frog';
+import { handle } from 'frog/next';
 
-const app = new Frog({
-  basePath: '/api',
-  title: 'Roulette',
-});
+const app = new Frog({ basePath: '/api' });
 
 app.frame('/', (c) => {
   return c.res({
     image: 'https://i.imgur.com/8Q8Q8Q8.png',
-    intents: [
-      Button.Transaction({ target: '/spin' }, 'Крутить рулетку! 🚀'),
-    ],
+    intents: [Button.Transaction({ target: '/spin' }, 'Spin')],
   });
 });
 
