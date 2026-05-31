@@ -2,6 +2,7 @@
   "name": "farcaster-roulette",
   "type": "module",
   "dependencies": {
-    "frog": "latest"
+    "frog": "latest",
+    "hono": "latest"
   }
 }
