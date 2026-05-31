@@ -1,17 +1,13 @@
 import { Frog, Button } from 'frog';
 import { handle } from 'frog/vercel';
 
-export const app = new Frog({
-  title: 'Roulette',
-});
+export const app = new Frog({ title: 'Roulette' });
 
 app.frame('/', (c) => {
   return c.res({
     action: '/spin',
     image: 'https://i.imgur.com/8Q8Q8Q8.png',
-    intents: [
-      Button.Transaction({ target: '/spin' }, 'Крутить рулетку! 🚀'),
-    ],
+    intents: [Button.Transaction({ target: '/spin' }, 'Крутить рулетку! 🚀')],
   });
 });
 
@@ -24,5 +20,4 @@ app.transaction('/spin', (c) => {
   });
 });
 
-// Это критическая строка для Vercel Functions
 export default handle(app);
