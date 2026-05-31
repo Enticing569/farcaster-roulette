@@ -1,14 +1,7 @@
 {
-  "builds": [
-    {
-      "src": "api/index.tsx",
-      "use": "@vercel/node"
+  "functions": {
+    "api/index.tsx": {
+      "runtime": "edge"
     }
-  ],
-  "routes": [
-    {
-      "src": "/(.*)",
-      "dest": "api/index.tsx"
-    }
-  ]
+  }
 }
