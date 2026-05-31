@@ -1,12 +1,10 @@
 import { getFrameMetadata } from 'frog/next';
 
 export async function generateMetadata() {
-  const frameTags = await getFrameMetadata('https://farcaster-roulette-zeta.vercel.app/api');
-  return {
-    other: frameTags,
-  };
+  const frameTags = await getFrameMetadata(`${process.env.VERCEL_URL || 'http://localhost:3000'}/api`);
+  return { other: frameTags };
 }
 
-export default function Home() {
-  return <h1>Farcaster Roulette Frame</h1>;
+export default function Page() {
+  return <div>Frame Ready</div>;
 }
