@@ -1,4 +1,6 @@
 import { Button, Frog } from 'frog'
+import { handle } from 'frog/vercel'
+
 export const app = new Frog({
   title: 'Farcaster Roulette'
 })
@@ -6,8 +8,6 @@ export const app = new Frog({
 export const config = {
   runtime: 'nodejs'
 }
-
-export const app = new Frog({})
 
 const CONTRACT_ADDRESS = '0xC7084fAC1EDFc9337e84A62285097D4586421c48'
 
