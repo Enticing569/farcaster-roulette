@@ -1,8 +1,15 @@
 {
   "name": "farcaster-roulette",
-  "type": "module",
+  "version": "1.0.0",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start"
+  },
   "dependencies": {
     "frog": "latest",
-    "hono": "latest"
+    "next": "latest",
+    "react": "latest",
+    "react-dom": "latest"
   }
 }
