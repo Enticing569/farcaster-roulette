@@ -24,5 +24,5 @@ app.transaction('/spin', (c) => {
   });
 });
 
-export const GET = handle(app);
-export const POST = handle(app);
+// Это критическая строка для Vercel Functions
+export default handle(app);
