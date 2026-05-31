@@ -2,5 +2,8 @@
   "type": "module",
   "dependencies": {
     "frog": "^0.14.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.4.5"
   }
 }
