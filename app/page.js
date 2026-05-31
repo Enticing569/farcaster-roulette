@@ -1,10 +1,14 @@
 import { getFrameMetadata } from 'frog/next';
 
 export async function generateMetadata() {
-  const frameTags = await getFrameMetadata(`${process.env.VERCEL_URL || 'http://localhost:3000'}/api`);
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 
+                  (process.env.VERCEL_URL && `https://${process.env.VERCEL_URL}`) || 
+                  'http://localhost:3000';
+    
+  const frameTags = await getFrameMetadata(`${baseUrl}/api`);
   return { other: frameTags };
 }
 
 export default function Page() {
-  return <div>Frame Ready</div>;
+  return <div>Roulette is live</div>;
 }
