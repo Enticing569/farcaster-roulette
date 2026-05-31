@@ -1,15 +1,15 @@
 {
   "compilerOptions": {
     "target": "ES2020",
-    "module": "ESNext",
-    "moduleResolution": "node",
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
     "jsx": "react-jsx",
-    "jsxImportSource": "frog",
     "allowJs": true,
     "skipLibCheck": true,
     "strict": true,
-    "esModuleInterop": true
+    "esModuleInterop": true,
+    "outDir": "./dist"
   },
-  "include": ["api/**/*", "**/*.ts", "**/*.tsx"],
+  "include": ["api/**/*.tsx", "**/*.ts", "**/*.tsx"],
   "exclude": ["node_modules"]
 }
