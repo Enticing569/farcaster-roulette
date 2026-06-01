@@ -5,7 +5,7 @@ import { handle } from 'frog/next';
 const app = new Frog({ basePath: '/api' });
 
 const SPIN_ABI = [
-  { inputs: [], name: "spin", outputs: [], stateMutability: "nonpayable", type: "function" }
+  { inputs: [], name: 'spin', outputs: [], stateMutability: 'nonpayable', type: 'function' }
 ];
 
 app.frame('/', (c) => {
