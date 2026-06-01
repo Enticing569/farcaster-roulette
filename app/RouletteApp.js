@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from 'react';
-import { ethers } from 'ethers';
+import { Web3Provider, Contract } from 'ethers';
 
 const CONTRACT_ADDRESS = '0xC7084fAC1EDFc9337e84A62285097D4586421c48';
 const SPIN_ABI = [
@@ -54,7 +54,7 @@ export default function RouletteApp() {
       setStatus('Preparing transaction...');
       setTxHash('');
 
-      const provider = new ethers.providers.Web3Provider(window.ethereum);
+      const provider = new Web3Provider(window.ethereum);
       const network = await provider.getNetwork();
       if (network.chainId !== 11155111) {
         setStatus('Please switch your wallet to Sepolia network.');
@@ -63,7 +63,7 @@ export default function RouletteApp() {
       }
 
       const signer = provider.getSigner();
-      const contract = new ethers.Contract(CONTRACT_ADDRESS, SPIN_ABI, signer);
+      const contract = new Contract(CONTRACT_ADDRESS, SPIN_ABI, signer);
       const tx = await contract.spin();
 
       setStatus('Transaction sent. Waiting for confirmation...');
@@ -94,7 +94,7 @@ export default function RouletteApp() {
       <div style={{ maxWidth: 620 }}>
         <h1 style={{ margin: 0, fontSize: '2.6rem' }}>Farcaster Roulette</h1>
         <p style={{ margin: '1rem 0 2rem', fontSize: '1rem', lineHeight: 1.8, color: '#cbd5e1' }}>
-          Нажмите Spin, чтобы отправить транзакцию на контракт Sepolia и получить тестовый результат.
+          Click Spin to send a transaction to the Sepolia contract and get a test result.
         </p>
       </div>
 
