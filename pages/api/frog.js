@@ -41,8 +41,4 @@ app.frame('result', (c) => {
   });
 });
 
-const appHandler = handle(app);
-
-export default function handler(req, res) {
-  return appHandler(req, res);
-}
+export default handle(app);
