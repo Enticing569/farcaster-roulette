@@ -1,0 +1,20 @@
+{
+  "version": "next",
+  "slug": "farcaster-roulette",
+  "name": "Farcaster Roulette",
+  "description": "A Sepolia faucet-style roulette mini app. Spin once every 24 hours and win 0.00001 ETH if the contract has funds.",
+  "url": "https://farcaster-roulette-one.vercel.app",
+  "imageUrl": "https://farcaster-roulette-one.vercel.app/og-image.png",
+  "splashImageUrl": "https://farcaster-roulette-one.vercel.app/splash.png",
+  "themeColor": "#1a1a2e",
+  "button": {
+    "title": "Play",
+    "action": {
+      "type": "launch_frame",
+      "name": "Farcaster Roulette",
+      "url": "https://farcaster-roulette-one.vercel.app",
+      "splashImageUrl": "https://farcaster-roulette-one.vercel.app/splash.png",
+      "splashBackgroundColor": "#1a1a2e"
+    }
+  }
+}
