@@ -8,7 +8,7 @@ export default function RouletteApp() {
     sdk.actions.ready();
   }, []);
 
-  const frameUrl = "https://farcaster-roulette-one.vercel.app/api";
+  const frameUrl = process.env.NEXT_PUBLIC_FRAME_URL || '/api';
 
   return (
     <div style={{ width: '100vw', height: '100vh', overflow: 'hidden' }}>

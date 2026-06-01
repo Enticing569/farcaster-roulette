@@ -1,6 +1,9 @@
 {
   "name": "farcaster-roulette",
   "version": "0.1.0",
+  "engines": {
+    "node": ">=18"
+  },
   "scripts": {
     "dev": "next dev",
     "build": "next build",
