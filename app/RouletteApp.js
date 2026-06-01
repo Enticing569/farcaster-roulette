@@ -281,6 +281,10 @@ export default function RouletteApp() {
         <p style={{ margin: '1rem 0 2rem', fontSize: '1rem', lineHeight: 1.8, color: '#cbd5e1' }}>
           Connect your wallet, switch to Sepolia automatically, and run a faucet-style spin transaction.
         </p>
+        <p style={{ margin: '0 0 2rem', fontSize: '0.95rem', lineHeight: 1.7, color: '#94a3b8' }}>
+          This faucet lets you call the contract's free `spin()` function once every 24 hours. If the contract has enough funds and you win,
+          it sends you a small reward of 0.00001 ETH. The app checks your cooldown, network, and contract balance before submitting the transaction.
+        </p>
       </div>
 
       <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap', justifyContent: 'center' }}>
