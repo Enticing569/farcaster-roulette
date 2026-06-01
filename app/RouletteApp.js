@@ -157,14 +157,14 @@ export default function RouletteApp() {
         return;
       }
 
-      const provider = new BrowserProvider(window.ethereum);
-      const network = await provider.getNetwork();
-      if (network.chainId !== SEPOLIA_CHAIN_ID) {
+      const currentChainId = await getCurrentChainId();
+      if (currentChainId !== SEPOLIA_CHAIN_ID) {
         setStatus('Please switch your wallet to Sepolia network.');
         setLoading(false);
         return;
       }
 
+      const provider = new BrowserProvider(window.ethereum);
       const signer = provider.getSigner();
       const contract = new Contract(CONTRACT_ADDRESS, SPIN_ABI, signer);
       const tx = await contract.spin();
