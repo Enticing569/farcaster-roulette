@@ -1,8 +1,8 @@
 {
   "accountAssociation": {
-    "header": "farcaster-developer-must-see-this-header",
-    "body": "farcaster-developer-must-see-this-body",
-    "comment": "farcaster-developer-must-see-this-comment"
+    "header": "eyJmaWQiOjUzMjk3NywidHlwZSI6ImF1dGgiLCJrZXkiOiIweGU5MURDNEUxNkMxNDJkODBjMTgyOTMxRmI5M2YwMjY3MzM0NGMxRTcifQ",
+    "payload": "eyJkb21haW4iOiJmYXJjYXN0ZXItcm91bGV0dGUtb25lLnZlcmNlbC5hcHAifQ",
+    "signature": "MIisANdHXfF7RdfAmufW41XT31JuysbSMIkkrZ3rQCcCxEg6kwiygpQN2+4yg2CpmbI+8Zd2zRZfKBhUsfb0iRs="
   },
   "frame": {
     "version": "1",
@@ -12,6 +12,10 @@
     "imageUrl": "https://farcaster-roulette-one.vercel.app/og-image.png",
     "buttonTitle": "Play",
     "splashImageUrl": "https://farcaster-roulette-one.vercel.app/splash.png",
-    "splashBackgroundColor": "#1a1a2e"
+    "splashBackgroundColor": "#1a1a2e",
+    "description": "A decentralized roulette game on Farcaster",
+    "screenshotUrls": [
+      "https://farcaster-roulette-one.vercel.app/screenshot.png"
+    ]
   }
 }
