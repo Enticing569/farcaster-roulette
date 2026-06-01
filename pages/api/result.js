@@ -1,2 +1,2 @@
-import handler from './_frog';
+import handler from './frog';
 export default handler;
