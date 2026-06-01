@@ -4,8 +4,25 @@ import { useEffect, useState } from 'react';
 import { ethers } from 'ethers';
 
 const CONTRACT_ADDRESS = '0xC7084fAC1EDFc9337e84A62285097D4586421c48';
+const COOLDOWN_PERIOD_SECONDS = 24 * 60 * 60;
 const SPIN_ABI = [
   { inputs: [], name: 'spin', outputs: [], stateMutability: 'nonpayable', type: 'function' },
+  {
+    inputs: [{ internalType: 'address', name: '', type: 'address' }],
+    name: 'lastSpinTime',
+    outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    anonymous: false,
+    inputs: [
+      { indexed: true, internalType: 'address', name: 'player', type: 'address' },
+      { indexed: false, internalType: 'bool', name: 'won', type: 'bool' },
+    ],
+    name: 'Result',
+    type: 'event',
+  },
 ];
 const SEPOLIA_CHAIN_ID = 11155111;
 const SEPOLIA_CHAIN_HEX = '0xaa36a7';
@@ -16,6 +33,8 @@ export default function RouletteApp() {
   const [loading, setLoading] = useState(false);
   const [txHash, setTxHash] = useState('');
   const [contractBalance, setContractBalance] = useState('');
+  const [lastSpinTime, setLastSpinTime] = useState(0);
+  const [nextSpinAvailable, setNextSpinAvailable] = useState('Now');
 
   useEffect(() => {
     const handleChainChanged = async (chainId) => {
@@ -49,6 +68,36 @@ export default function RouletteApp() {
     };
   }, []);
 
+  const formatTimestamp = (timestamp) => new Date(timestamp * 1000).toLocaleString();
+
+  const refreshCooldown = async (accountAddress) => {
+    if (!window.ethereum || !accountAddress) {
+      return;
+    }
+
+    try {
+      const provider = new ethers.providers.Web3Provider(window.ethereum);
+      const contract = new ethers.Contract(CONTRACT_ADDRESS, SPIN_ABI, provider);
+      const lastTime = await contract.lastSpinTime(accountAddress);
+      const lastTimeNumber = lastTime.toNumber();
+      setLastSpinTime(lastTimeNumber);
+
+      if (lastTimeNumber === 0) {
+        setNextSpinAvailable('Now');
+        return;
+      }
+
+      const nextAvailable = lastTimeNumber + COOLDOWN_PERIOD_SECONDS;
+      if (Math.floor(Date.now() / 1000) >= nextAvailable) {
+        setNextSpinAvailable('Now');
+      } else {
+        setNextSpinAvailable(formatTimestamp(nextAvailable));
+      }
+    } catch (error) {
+      setNextSpinAvailable('N/A');
+    }
+  };
+
   const refreshBalance = async () => {
     try {
       if (!window.ethereum) {
@@ -57,8 +106,12 @@ export default function RouletteApp() {
       const provider = new ethers.providers.Web3Provider(window.ethereum);
       const balance = await provider.getBalance(CONTRACT_ADDRESS);
       setContractBalance(ethers.utils.formatEther(balance));
+      if (account) {
+        await refreshCooldown(account);
+      }
     } catch (error) {
       setContractBalance('N/A');
+      setNextSpinAvailable('N/A');
     }
   };
 
@@ -171,8 +224,17 @@ export default function RouletteApp() {
 
       setStatus('Transaction sent. Waiting for confirmation...');
       const receipt = await tx.wait();
+      const resultTopic = contract.interface.getEventTopic('Result');
+      const resultLog = receipt.events?.find((event) => event.topics[0] === resultTopic);
+      let winMessage = '';
+
+      if (resultLog) {
+        const parsed = contract.interface.parseLog(resultLog);
+        winMessage = parsed.args.won ? 'You won 0.00001 ETH!' : 'No prize this time.';
+      }
+
       setTxHash(receipt.transactionHash);
-      setStatus('Spin confirmed! Transaction completed.');
+      setStatus(`Spin confirmed! ${winMessage}`);
       await refreshBalance();
     } catch (error) {
       setStatus(error?.message || 'Transaction failed.');
@@ -238,6 +300,23 @@ export default function RouletteApp() {
         >
           {loading ? 'Spinning…' : 'Spin'}
         </button>
+
+        <button
+          onClick={refreshBalance}
+          style={{
+            minWidth: 150,
+            padding: '14px 18px',
+            fontSize: '0.98rem',
+            fontWeight: 700,
+            color: '#0f172a',
+            background: '#a3e635',
+            border: 'none',
+            borderRadius: 12,
+            cursor: 'pointer',
+          }}
+        >
+          Refresh
+        </button>
       </div>
 
       <div
@@ -255,7 +334,12 @@ export default function RouletteApp() {
         <p style={{ margin: 0, color: '#94a3b8' }}>Status</p>
         <p style={{ margin: '10px 0 0', fontSize: '1rem', lineHeight: 1.6 }}>{status}</p>
         {account ? (
-          <p style={{ margin: '12px 0 0', color: '#94a3b8' }}>Account: {account}</p>
+          <>
+            <p style={{ margin: '12px 0 0', color: '#94a3b8' }}>Account: {account}</p>
+            <p style={{ margin: '12px 0 0', color: '#94a3b8' }}>
+              Next spin available: {nextSpinAvailable}
+            </p>
+          </>
         ) : null}
         {contractBalance ? (
           <p style={{ margin: '12px 0 0', color: '#a5f3fc' }}>
