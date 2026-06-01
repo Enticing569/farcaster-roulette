@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from 'react';
-import { BrowserProvider, Contract, formatEther } from 'ethers';
+import { ethers } from 'ethers';
 
 const CONTRACT_ADDRESS = '0xC7084fAC1EDFc9337e84A62285097D4586421c48';
 const SPIN_ABI = [
@@ -54,9 +54,9 @@ export default function RouletteApp() {
       if (!window.ethereum) {
         return;
       }
-      const provider = new BrowserProvider(window.ethereum);
+      const provider = new ethers.providers.Web3Provider(window.ethereum);
       const balance = await provider.getBalance(CONTRACT_ADDRESS);
-      setContractBalance(formatEther(balance));
+      setContractBalance(ethers.utils.formatEther(balance));
     } catch (error) {
       setContractBalance('N/A');
     }
@@ -164,9 +164,9 @@ export default function RouletteApp() {
         return;
       }
 
-      const provider = new BrowserProvider(window.ethereum);
+      const provider = new ethers.providers.Web3Provider(window.ethereum);
       const signer = provider.getSigner();
-      const contract = new Contract(CONTRACT_ADDRESS, SPIN_ABI, signer);
+      const contract = new ethers.Contract(CONTRACT_ADDRESS, SPIN_ABI, signer);
       const tx = await contract.spin();
 
       setStatus('Transaction sent. Waiting for confirmation...');
