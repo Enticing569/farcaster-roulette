@@ -18,18 +18,33 @@ export default function RouletteApp() {
   const [contractBalance, setContractBalance] = useState('');
 
   useEffect(() => {
+    const handleChainChanged = async (chainId) => {
+      const numericChainId = parseInt(chainId, 16);
+      if (numericChainId === SEPOLIA_CHAIN_ID) {
+        setStatus('Connected to Sepolia network.');
+        await refreshBalance();
+      } else {
+        setStatus('Please switch your wallet to Sepolia network.');
+        setContractBalance('');
+      }
+    };
+
+    const handleAccountsChanged = async (accounts) => {
+      setAccount(accounts[0] || '');
+      if (accounts[0]) {
+        await refreshBalance();
+      }
+    };
+
     if (typeof window !== 'undefined' && window.ethereum) {
-      window.ethereum.on('accountsChanged', async (accounts) => {
-        setAccount(accounts[0] || '');
-        if (accounts[0]) {
-          await refreshBalance();
-        }
-      });
+      window.ethereum.on('accountsChanged', handleAccountsChanged);
+      window.ethereum.on('chainChanged', handleChainChanged);
     }
 
     return () => {
       if (typeof window !== 'undefined' && window.ethereum) {
-        window.ethereum.removeAllListeners('accountsChanged');
+        window.ethereum.removeListener('accountsChanged', handleAccountsChanged);
+        window.ethereum.removeListener('chainChanged', handleChainChanged);
       }
     };
   }, []);
@@ -47,11 +62,29 @@ export default function RouletteApp() {
     }
   };
 
+  const getCurrentChainId = async () => {
+    try {
+      if (!window.ethereum) {
+        return null;
+      }
+      const chainIdHex = await window.ethereum.request({ method: 'eth_chainId' });
+      return parseInt(chainIdHex, 16);
+    } catch {
+      return null;
+    }
+  };
+
   const switchToSepolia = async () => {
     try {
       if (!window.ethereum) {
         setStatus('No wallet detected. Install MetaMask or use a Web3-enabled browser.');
         return false;
+      }
+
+      const currentChainId = await getCurrentChainId();
+      if (currentChainId === SEPOLIA_CHAIN_ID) {
+        setStatus('Sepolia network already selected.');
+        return true;
       }
 
       await window.ethereum.request({
@@ -62,10 +95,27 @@ export default function RouletteApp() {
       return true;
     } catch (switchError) {
       if (switchError?.code === 4902) {
-        setStatus('Sepolia is not available in your wallet. Please add the Sepolia chain manually.');
-      } else {
-        setStatus(switchError?.message || 'Failed to switch network.');
+        try {
+          await window.ethereum.request({
+            method: 'wallet_addEthereumChain',
+            params: [
+              {
+                chainId: SEPOLIA_CHAIN_HEX,
+                chainName: 'Sepolia',
+                nativeCurrency: { name: 'Sepolia ETH', symbol: 'ETH', decimals: 18 },
+                rpcUrls: ['https://rpc.sepolia.org'],
+                blockExplorerUrls: ['https://sepolia.etherscan.io'],
+              },
+            ],
+          });
+          setStatus('Sepolia added to wallet.');
+          return true;
+        } catch (addError) {
+          setStatus(addError?.message || 'Failed to add Sepolia network to wallet.');
+          return false;
+        }
       }
+      setStatus(switchError?.message || 'Failed to switch network.');
       return false;
     }
   };
