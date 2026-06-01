@@ -2,7 +2,10 @@
 import { Frog, Button } from 'frog';
 import { handle } from 'frog/next';
 
-const app = new Frog();
+const app = new Frog({ basePath: '/api' });
+
+export const runtime = 'nodejs';
+export const dynamic = 'force-dynamic';
 
 const SPIN_ABI = [
   { inputs: [], name: 'spin', outputs: [], stateMutability: 'nonpayable', type: 'function' }
