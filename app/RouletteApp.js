@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { ethers } from 'ethers';
+import { sdk } from '@farcaster/miniapp-sdk';
 
 const CONTRACT_ADDRESS = '0xC7084fAC1EDFc9337e84A62285097D4586421c48';
 const COOLDOWN_PERIOD_SECONDS = 24 * 60 * 60;
@@ -37,6 +38,14 @@ export default function RouletteApp() {
   const [nextSpinAvailable, setNextSpinAvailable] = useState('Now');
 
   useEffect(() => {
+    // Signal to Farcaster that the mini app is ready
+    try {
+      sdk.actions.ready();
+    } catch (error) {
+      // SDK may not be available in development
+      console.log('Farcaster SDK ready() not available');
+    }
+
     const handleChainChanged = async (chainId) => {
       const numericChainId = parseInt(chainId, 16);
       if (numericChainId === SEPOLIA_CHAIN_ID) {
