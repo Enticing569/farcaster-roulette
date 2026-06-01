@@ -4,24 +4,21 @@ import { handle } from 'frog/next';
 
 const app = new Frog({ basePath: '/api' });
 
-export const runtime = 'nodejs';
-export const dynamic = 'force-dynamic';
-
 const SPIN_ABI = [
   { inputs: [], name: 'spin', outputs: [], stateMutability: 'nonpayable', type: 'function' }
 ];
 
-app.frame('/', (c) => {
+app.frame('', (c) => {
   return c.res({
     imageAspectRatio: '1:1',
     image: 'https://placehold.co/600x600/1a1a2e/ffffff?text=%F0%9F%8E%B0+Roulette',
     intents: [
-      <Button.Transaction target="/spin" action="/result">Spin</Button.Transaction>
+      <Button.Transaction target="spin" action="result">Spin</Button.Transaction>
     ],
   });
 });
 
-app.transaction('/spin', (c) => {
+app.transaction('spin', (c) => {
   return c.contract({
     abi: SPIN_ABI,
     chainId: 'eip155:11155111',
@@ -30,7 +27,7 @@ app.transaction('/spin', (c) => {
   });
 });
 
-app.frame('/result', (c) => {
+app.frame('result', (c) => {
   const transactionId = c.transactionId;
   const statusMessage = transactionId ? 'Transaction+sent!' : 'Transaction+failed';
   const txDisplay = transactionId
@@ -44,5 +41,5 @@ app.frame('/result', (c) => {
   });
 });
 
-export const GET = handle(app);
-export const POST = handle(app);
+const handler = handle(app);
+export default handler;
