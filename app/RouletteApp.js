@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from 'react';
-import { Web3Provider, Contract } from 'ethers';
+import { BrowserProvider, Contract } from 'ethers';
 
 const CONTRACT_ADDRESS = '0xC7084fAC1EDFc9337e84A62285097D4586421c48';
 const SPIN_ABI = [
@@ -54,7 +54,7 @@ export default function RouletteApp() {
       setStatus('Preparing transaction...');
       setTxHash('');
 
-      const provider = new Web3Provider(window.ethereum);
+      const provider = new BrowserProvider(window.ethereum);
       const network = await provider.getNetwork();
       if (network.chainId !== 11155111) {
         setStatus('Please switch your wallet to Sepolia network.');
