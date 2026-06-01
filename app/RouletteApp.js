@@ -70,6 +70,19 @@ export default function RouletteApp() {
 
   const formatTimestamp = (timestamp) => new Date(timestamp * 1000).toLocaleString();
 
+  const getRevertReason = (error) => {
+    const message = error?.message || '';
+    const fallback = 'Transaction failed.';
+
+    if (message.includes('Wait 24h')) {
+      return 'Transaction reverted: wait 24h before spinning again.';
+    }
+    if (message.includes('cannot estimate gas')) {
+      return 'Cannot estimate gas: the transaction may fail, likely because cooldown is still active.';
+    }
+    return fallback;
+  };
+
   const refreshCooldown = async (accountAddress) => {
     if (!window.ethereum || !accountAddress) {
       return;
@@ -217,6 +230,12 @@ export default function RouletteApp() {
         return;
       }
 
+      if (nextSpinAvailable !== 'Now') {
+        setStatus(`Cooldown active. Next spin available: ${nextSpinAvailable}`);
+        setLoading(false);
+        return;
+      }
+
       const provider = new ethers.providers.Web3Provider(window.ethereum);
       const signer = provider.getSigner();
       const contract = new ethers.Contract(CONTRACT_ADDRESS, SPIN_ABI, signer);
@@ -237,7 +256,7 @@ export default function RouletteApp() {
       setStatus(`Spin confirmed! ${winMessage}`);
       await refreshBalance();
     } catch (error) {
-      setStatus(error?.message || 'Transaction failed.');
+      setStatus(getRevertReason(error));
     } finally {
       setLoading(false);
     }
