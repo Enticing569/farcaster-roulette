@@ -1,4 +1,9 @@
 {
+  "accountAssociation": {
+    "header": "eyJmaWQiOjUzMjk3NywidHlwZSI6ImF1dGgiLCJrZXkiOiIweGU5MURDNEUxNkMxNDJkODBjMTgyOTMxRmI5M2YwMjY3MzM0NGMxRTcifQ",
+    "payload": "eyJkb21haW4iOiJmYXJjYXN0ZXItcm91bGV0dGUtb25lLnZlcmNlbC5hcHAifQ",
+    "signature": "MIisANdHXfF7RdfAmufW41XT31JuysbSMIkkrZ3rQCcCxEg6kwiygpQN2+4yg2CpmbI+8Zd2zRZfKBhUsfb0iRs="
+  },
   "version": "next",
   "slug": "farcaster-roulette",
   "name": "Farcaster Roulette",
@@ -18,3 +23,4 @@
     }
   }
 }
+
