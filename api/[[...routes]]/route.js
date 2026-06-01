@@ -1,3 +1,4 @@
+/** @jsxImportSource frog/jsx */
 import { Frog, Button } from 'frog';
 import { handle } from 'frog/next';
 
@@ -10,11 +11,7 @@ const SPIN_ABI = [
 app.frame('/', (c) => {
   return c.res({
     imageAspectRatio: '1:1',
-    image: (
-      <div style={{ display: 'flex', background: '#1a1a2e', width: '100%', height: '100%', alignItems: 'center', justifyContent: 'center' }}>
-        <span style={{ color: 'white', fontSize: 60 }}>🎰 Roulette</span>
-      </div>
-    ),
+    image: 'https://placehold.co/600x600/1a1a2e/ffffff?text=%F0%9F%8E%B0+Roulette',
     intents: [
       <Button.Transaction target="/spin" action="/result">Spin</Button.Transaction>
     ],
@@ -32,24 +29,14 @@ app.transaction('/spin', (c) => {
 
 app.frame('/result', (c) => {
   const transactionId = c.transactionId;
-  let statusMessage = 'Transaction sent!';
-  let txDisplay = 'Processing...';
-
-  if (!transactionId) {
-    statusMessage = 'Transaction failed or rejected';
-    txDisplay = 'Please try again';
-  } else {
-    txDisplay = `ID: ${transactionId.slice(0, 10)}...`;
-  }
+  const statusMessage = transactionId ? 'Transaction+sent!' : 'Transaction+failed';
+  const txDisplay = transactionId
+    ? `ID:+${transactionId.slice(0, 10)}...`
+    : 'Please+try+again';
 
   return c.res({
     imageAspectRatio: '1:1',
-    image: (
-      <div style={{ display: 'flex', background: '#1a1a2e', width: '100%', height: '100%', alignItems: 'center', justifyContent: 'center', flexDirection: 'column' }}>
-        <span style={{ color: 'white', fontSize: 40 }}>{statusMessage}</span>
-        {transactionId && <span style={{ color: '#aaa', fontSize: 20 }}>{txDisplay}</span>}
-      </div>
-    ),
+    image: `https://placehold.co/600x600/1a1a2e/ffffff?text=${statusMessage}%0A${txDisplay}`,
     intents: [<Button action="/">Play again</Button>],
   });
 });
